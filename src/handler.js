@@ -149,13 +149,26 @@ const getAllBookHandler = (request, h) => {
     response.code(200);
     return response;
   } if (request.query.name) {
-    const getBook = books.filter((book) => book.name.includes(request.query.name));
+    const { name } = request.query;
+    const str = request.query.name;
+    const low = str.toLowerCase();
+    // console.log(low);
+    const getBook = books.filter((book) => book.name.includes(name));
+    const getBook1 = books.filter((book) => book.name.includes(low));
+    // getBook.push(getBook1);
     const arrBook = [];
     for (const item in getBook) {
       arrBook.push({
         id: getBook[item].id,
         name: getBook[item].name,
         publisher: getBook[item].publisher,
+      });
+    }
+    for (const item in getBook1) {
+      arrBook.push({
+        id: getBook1[item].id,
+        name: getBook1[item].name,
+        publisher: getBook1[item].publisher,
       });
     }
     const response = h.response({
